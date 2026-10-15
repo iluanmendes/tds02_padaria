@@ -1,4 +1,5 @@
 ﻿using backPadaria.Model;
+using System.ComponentModel;
 
 namespace backPadaria
 {
@@ -6,30 +7,33 @@ namespace backPadaria
     {
         static void Main(string[] args)
         {
-            string nome;
+
+            Console.WriteLine("Digite o nome do cliente: ");
+            string nomeCliente = Console.ReadLine();
+
+            Console.WriteLine("Digite o endereço do cliente: ");
+            string enderecoCliente = Console.ReadLine();
+
+            Console.WriteLine("Digite o cpf do cliente: ");
+            string cpfCliente = Console.ReadLine();
+
+            Console.WriteLine("Digite o telefone do cliente: ");
+            string telefoneCliente = Console.ReadLine();
+
+            Console.WriteLine("Digite a quantidade de pontos");
+            int pontosCliente = int.Parse(Console.ReadLine());
 
 
-            try
-            {
-                Console.WriteLine("Digite o nome do cliente");
-                nome = Console.ReadLine();
+            Cliente cliente1 = new Cliente(
+                nome: nomeCliente,
+                cpf: cpfCliente,
+                telefone: telefoneCliente,
+                endereco: enderecoCliente,
+                pontos: pontosCliente
+             );
 
-                Cliente cliente1 = new Cliente(
-                nome: nome,
-                cpf: "1234",
-                telefone: "1111",
-                endereco: "Rua rua",
-                pontos: 123
-                );
-            }catch(Exception err)
-            {
 
-                Console.WriteLine(err.Message);
-            }
-            
-
-            // Bom dia
-
+            Cliente.Inserir(cliente1);
           
         }
     }

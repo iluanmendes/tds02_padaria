@@ -9,7 +9,7 @@ namespace backPadaria
 {
     public static class Banco
     {
-        private static string stringDeConexao = "Server=10.91.45.39;Port=3306;Database=padaria_bd;Uid=admin;Pwd=12345678";
+        private static string stringDeConexao = "Server=10.91.45.29;Port=3306;Database=padaria_bd;Uid=admin;Pwd=12345678";
 
 
         public static void connectAndTest()
@@ -43,5 +43,43 @@ namespace backPadaria
 
         }
 
+        // Declaração do método: público e estático, retorna um número inteiro (linhas afetadas) 
+        // e recebe um objeto MySqlCommand com a instrução SQL já configurada como parâmetro.
+        public static int executarComando(MySqlCommand command)
+        {
+            /* O bloco 'using' garante que a conexão será automaticamente fechada e liberada 
+              da memória ao final do bloco, mesmo que ocorram erros no meio do processo.
+
+                Cria a conexão utilizando a variavel de ambiente.
+            */
+            using (var conexao = new MySqlConnection(stringDeConexao))
+            {
+                // Vinculação: Diz ao comando SQL em qual conexão ele deve ser executado.
+                command.Connection = conexao;
+
+                // Tratamento de erros: Inicia um bloco de tentativa para proteger o programa de falhas abruptas.
+                try
+                {
+                    // Abertura da conexão: Estabelece efetivamente a comunicação com o servidor MySQL.
+                    conexao.Open();
+
+                    // Execução: O ExecuteNonQuery dispara comandos de ação (INSERT, UPDATE, DELETE).
+                    // Ele não retorna registros, mas sim o número inteiro de linhas que foram alteradas,
+                    // e o 'return' devolve esse número para quem chamou o método.
+
+                    return command.ExecuteNonQuery();
+                }
+                catch (MySqlException ex) 
+                {
+                    Console.WriteLine($"Erro de Banco de dados {ex.Message}");
+
+                    return -1;
+                }
+
+
+
+            }
+
+        }
     }
 }
