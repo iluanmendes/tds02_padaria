@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace backPadaria.Model
 
         public Cliente(string nome, string cpf, string telefone, string endereco, int pontos)
         {
+
+            if (string.IsNullOrWhiteSpace(nome)) throw new Exception("O nome do cliente não pode ser vazio");
+
             this.nome = nome;
             this.cpf = cpf;
             this.telefone = telefone;

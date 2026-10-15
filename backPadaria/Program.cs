@@ -6,8 +6,31 @@ namespace backPadaria
     {
         static void Main(string[] args)
         {
+            string nome;
 
-            Banco.connectAndTest();
+
+            try
+            {
+                Console.WriteLine("Digite o nome do cliente");
+                nome = Console.ReadLine();
+
+                Cliente cliente1 = new Cliente(
+                nome: nome,
+                cpf: "1234",
+                telefone: "1111",
+                endereco: "Rua rua",
+                pontos: 123
+                );
+            }catch(Exception err)
+            {
+
+                Console.WriteLine(err.Message);
+            }
+            
+
+            
+
+          
         }
     }
 }
