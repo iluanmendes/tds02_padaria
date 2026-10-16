@@ -64,6 +64,7 @@ namespace backPadaria.Model
             
             // Gerenciamento de recursos: Cria o objeto de comando já passando a instrução SQL.
             // O 'using' garante que os recursos de memória ocupados pelo comando sejam liberados ao final do bloco.
+
             using (var cmd = new MySqlCommand(sql))
             {
                 // Vinculação de Dados: Pega as propriedades do objeto C# (cliente.Nome, cliente.cpf, etc.)
