@@ -41,6 +41,12 @@ namespace backPadaria.Model
             this.Pontos = pontos;
         }
 
+        // Gambiarra para testar
+        public Cliente(int id)
+        {
+            this.Id = id;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Nome { get => nome; set => nome = value; }
         public string Cpf { get => cpf; set => cpf = value; }
@@ -84,5 +90,72 @@ namespace backPadaria.Model
             }
 
         }
+
+        public static int Deletar(Cliente cliente)
+        {
+
+            string sql = "DELETE FROM `Cliente` WHERE `Id` = @id";
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                cmd.Parameters.AddWithValue("@id", cliente.id);
+
+                return Banco.executarComando(cmd);
+            }
+
+        }
+
+        public static List<Cliente> ListarTodos()
+        {
+            string sql = "SELECT * FROM `Cliente`";
+
+            List<Cliente> listaClientes = new(); 
+
+            using (var cmd = new MySqlCommand(sql))
+            {
+                // Executa a leitura. O bloco 'using' aqui é FUNDAMENTAL para garantir que o 
+                // reader seja fechado no final, o que por sua vez fecha a conexão com o banco.
+                using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd)) {
+
+                    // O while vai rodar uma vez para CADA linha que existir na tabela Cliente
+                    while (reader.Read()) 
+                    {
+                       // Extrai os dados da linha atual
+                        int id =        reader.GetInt32("Id");
+
+                        string nome      = validarCampo(reader["Nome"]);
+                        string cpf       = validarCampo(reader["CPF"]);
+                        string telefone  = validarCampo(reader["Telefone"]); 
+                        string endereco  = validarCampo(reader["Telefone"]);
+
+                        int pontos       = reader.GetInt32("Pontos");
+
+                        // Cria o objeto Cliente com os dados extraídos
+                        Cliente cliente = new Cliente(id, nome, cpf, endereco, telefone, pontos);
+
+                        // Adiciona este cliente à nossa lista
+                        listaClientes.Add(cliente);
+                    }
+
+                }
+                // Retorna a lista completa (se a tabela estiver vazia, retorna uma lista com 0 itens)
+                return listaClientes;               
+
+            }
+
+        }
+
+          private static string validarCampo(object campo)
+            {
+                if (campo == DBNull.Value || campo == null)
+                {
+                    return "";
+                }
+                else {
+                    return campo.ToString();
+                }
+
+            }
     }
+   
 }
