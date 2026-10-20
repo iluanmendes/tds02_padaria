@@ -1,4 +1,5 @@
 ﻿using backPadaria.Model;
+using backPadaria.Service;
 using System.ComponentModel;
 
 namespace backPadaria
@@ -8,29 +9,7 @@ namespace backPadaria
         static void Main(string[] args)
         {
 
-            //Console.WriteLine("Digite o nome do cliente: ");
-            //string nomeCliente = Console.ReadLine();
-
-            //Console.WriteLine("Digite o endereço do cliente: ");
-            //string enderecoCliente = Console.ReadLine();
-
-            //Console.WriteLine("Digite o cpf do cliente: ");
-            //string cpfCliente = Console.ReadLine();
-
-            //Console.WriteLine("Digite o telefone do cliente: ");
-            //string telefoneCliente = Console.ReadLine();
-
-            //Console.WriteLine("Digite a quantidade de pontos");
-            //int pontosCliente = int.Parse(Console.ReadLine());
-
-
-            //Cliente cliente1 = new Cliente(
-            //    nome: nomeCliente,
-            //    cpf: cpfCliente,
-            //    telefone: telefoneCliente,
-            //    endereco: enderecoCliente,
-            //    pontos: pontosCliente
-            //);
+            
 
             //Cliente clienteParaDeletar = new Cliente(5);
 
@@ -84,22 +63,24 @@ namespace backPadaria
 
 
 
-            Cliente? meuCliente = Cliente.listarPorId(7);
+            //Cliente? meuCliente = Cliente.listarPorId(7);
 
-            if(meuCliente != null)
-            {
-                meuCliente.Endereco = "Rua Barão de Alagoas, 171";
-                meuCliente.Telefone = "1197747-8585";
+            //if(meuCliente != null)
+            //{
+            //    meuCliente.Endereco = "Rua Barão de Alagoas, 171";
+            //    meuCliente.Telefone = "1197747-8585";
 
-                int resultado = Cliente.Atualizar(meuCliente);
+            //    int resultado = Cliente.Atualizar(meuCliente);
 
-                if (resultado > 0)
-                {
-                    Console.WriteLine("Cliente atualizado com sucesso");
-                }
-               
+            //    if (resultado > 0)
+            //    {
+            //        Console.WriteLine("Cliente atualizado com sucesso");
+            //    }
 
-            }
+
+            //}
+
+            ClienteService.MenuCliente();
 
         }
     }
