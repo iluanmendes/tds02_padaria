@@ -68,7 +68,7 @@ namespace backPadaria.Model
             // Ela impede ataques de SQL Injection, pois o banco entende o que é comando e o que é apenas texto do usuário.
 
             string sql = "INSERT INTO `Cliente` (`Nome`, `CPF`, `Telefone`, `Endereco`, `Pontos`) VALUES (@Nome, @CPF, @Telefone, @Endereco, @Pontos)";
-            
+
             // Gerenciamento de recursos: Cria o objeto de comando já passando a instrução SQL.
             // O 'using' garante que os recursos de memória ocupados pelo comando sejam liberados ao final do bloco.
 
@@ -110,26 +110,27 @@ namespace backPadaria.Model
         {
             string sql = "SELECT * FROM `Cliente`";
 
-            List<Cliente> listaClientes = new(); 
+            List<Cliente> listaClientes = new();
 
             using (var cmd = new MySqlCommand(sql))
             {
                 // Executa a leitura. O bloco 'using' aqui é FUNDAMENTAL para garantir que o 
                 // reader seja fechado no final, o que por sua vez fecha a conexão com o banco.
-                using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd)) {
+                using (MySqlDataReader reader = Banco.executarComRetornoDeDados(cmd))
+                {
 
                     // O while vai rodar uma vez para CADA linha que existir na tabela Cliente
-                    while (reader.Read()) 
+                    while (reader.Read())
                     {
-                       // Extrai os dados da linha atual
-                        int id =        reader.GetInt32("Id");
+                        // Extrai os dados da linha atual
+                        int id = reader.GetInt32("Id");
 
-                        string nome      = validarCampo(reader["Nome"]);
-                        string cpf       = validarCampo(reader["CPF"]);
-                        string telefone  = validarCampo(reader["Telefone"]); 
-                        string endereco  = validarCampo(reader["Endereco"]);
+                        string nome = validarCampo(reader["Nome"]);
+                        string cpf = validarCampo(reader["CPF"]);
+                        string telefone = validarCampo(reader["Telefone"]);
+                        string endereco = validarCampo(reader["Endereco"]);
 
-                        int pontos       = reader.GetInt32("Pontos");
+                        int pontos = reader.GetInt32("Pontos");
 
                         // Cria o objeto Cliente com os dados extraídos
                         Cliente cliente = new Cliente(id, nome, cpf, telefone, endereco, pontos);
@@ -140,7 +141,7 @@ namespace backPadaria.Model
 
                 }
                 // Retorna a lista completa (se a tabela estiver vazia, retorna uma lista com 0 itens)
-                return listaClientes;               
+                return listaClientes;
 
             }
 
@@ -160,7 +161,8 @@ namespace backPadaria.Model
 
                 Cliente? cliente = null;
 
-                while (reader.Read()) {
+                while (reader.Read())
+                {
 
                     // Extrai os dados da linha atual
                     int idBanco = reader.GetInt32("Id");
@@ -208,17 +210,18 @@ namespace backPadaria.Model
 
 
 
-          private static string validarCampo(object campo)
+        private static string validarCampo(object campo)
+        {
+            if (campo == DBNull.Value || campo == null)
             {
-                if (campo == DBNull.Value || campo == null)
-                {
-                    return "";
-                }
-                else {
-                    return campo.ToString();
-                }
-
+                return "";
             }
+            else
+            {
+                return campo.ToString();
+            }
+
+        }
     }
-   
+
 }

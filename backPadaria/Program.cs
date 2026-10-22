@@ -9,7 +9,7 @@ namespace backPadaria
         static void Main(string[] args)
         {
 
-            
+
 
             //Cliente clienteParaDeletar = new Cliente(5);
 
@@ -80,7 +80,16 @@ namespace backPadaria
 
             //}
 
-            ClienteService.MenuCliente();
+
+            //try
+            //{
+            //    Cliente daniel = new Cliente("", "...", "444", "....", 10);
+            //}
+            //catch (Exception ex) {
+            //    Console.WriteLine(ex.Message);
+            //}
+
+            ProdutoService.MenuProduto();
 
         }
     }
