@@ -1,6 +1,7 @@
 ﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace backPadaria.Model
 {
@@ -16,6 +17,9 @@ namespace backPadaria.Model
         public Produto(string nome, decimal preco, string categoria, bool fabricado, int marcaId)
         {
             if (string.IsNullOrWhiteSpace(nome)) throw new Exception("O nome do produto não pode ser vazio");
+            if (preco < 0) throw new Exception("O preço do produto não pode ser negativo");
+            if (string.IsNullOrWhiteSpace(categoria)) throw new Exception("A categoria não pode ser vazia");
+            if (marcaId <= 0) throw new Exception("O id da Marca deve ser maior que 0");
 
             this.Nome = nome;
             this.Preco = preco;
@@ -24,14 +28,13 @@ namespace backPadaria.Model
             this.MarcaId = marcaId;
         }
 
-        public Produto(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaId)
+        public Produto(int id, string nome, decimal preco, string categoria, bool fabricado, int marcaId) 
+            : this(nome, preco, categoria, fabricado, marcaId)
         {
+            if(id<=0) throw new Exception("O ID do produto é inválido");
+
             this.Id = id;
-            this.Nome = nome;
-            this.Preco = preco;
-            this.Categoria = categoria;
-            this.Fabricado = fabricado;
-            this.MarcaId = marcaId;
+            
         }
 
         public Produto(int id)

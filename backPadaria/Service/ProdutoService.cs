@@ -61,6 +61,9 @@ namespace backPadaria.Service
             Console.WriteLine("Categoria: ");
             string categoria = Console.ReadLine();
 
+            //  s  
+            //s
+            //S  == S
             Console.WriteLine("O produto é de fabricação própria? (S/N): ");
             bool fabricado = Console.ReadLine().Trim().ToUpper() == "S";
 

@@ -89,7 +89,14 @@ namespace backPadaria
             //    Console.WriteLine(ex.Message);
             //}
 
-            ProdutoService.MenuProduto();
+            //LoginFuncionario login = new LoginFuncionario(2, "jp_padoca@padariapaoecia.com.br", "deumaoito", "Diretor");
+
+
+            LoginService.FazerLoginMenu();
+
+          
+
+
 
         }
     }
