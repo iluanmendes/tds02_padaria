@@ -92,7 +92,9 @@ namespace backPadaria
             //LoginFuncionario login = new LoginFuncionario(2, "jp_padoca@padariapaoecia.com.br", "deumaoito", "Diretor");
 
 
-            LoginService.FazerLoginMenu();
+            //LoginService.FazerLoginMenu();
+
+            VendaService.MenuVendas();
 
           
 

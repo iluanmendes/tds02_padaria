@@ -33,7 +33,7 @@ namespace backPadaria.Service
                 }
                 else
                 {
-                    Console.WriteLine("\n\nLogin ou palavra-passe incorretos. Acesso negado.");
+                    Console.WriteLine("\n\nLogin ou senha incorretos. Acesso negado.");
                     Console.WriteLine("Pressione uma tecla para tentar novamente...");
                     Console.ReadKey();
 
@@ -72,6 +72,8 @@ namespace backPadaria.Service
                 {
                     senha += tecla.KeyChar;
                     Console.Write("*"); // Exibe o asterisco no lugar do caractere
+
+                    Console.WriteLine(senha);
                 }
             }
             return senha;

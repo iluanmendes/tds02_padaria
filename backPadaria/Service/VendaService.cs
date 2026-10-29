@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using backPadaria.Model;
 
 namespace backPadaria.Service
 {
@@ -54,9 +55,87 @@ namespace backPadaria.Service
         public static void iniciarNovaVenda() {
             Console.WriteLine("------ NOVA VENDA ------");
 
-            // 1 
+            // 1 - IDENTIFICAÇÃO DO FUNCIONÁRIO 
+
+            int funcionarioID = 2;
 
 
+            // 1 - Identificação do Cliente 
+
+            Console.WriteLine("ID do cliente (Pressione ENTER se não quiser identificar");
+
+            int idCliente = 0;
+
+            int.TryParse(Console.ReadLine(), out idCliente);
+            
+            Cliente? clienteVenda = Cliente.listarPorId(idCliente);
+
+            
+            // -- Inicializando o objeto compra
+            Compra compraAtiva = new Compra(DateTime.Now, funcionarioID, clienteVenda.Id);
+
+            // Loop do carrinho de compras
+
+            bool adicionarMais = true;
+
+            while (adicionarMais) {
+
+                Console.WriteLine("\n---Adicionar Produto ---");
+                Console.WriteLine("Id do produto ou '0' para finalizar/pagar ");
+
+                int.TryParse(Console.ReadLine(), out int idProduto);
+
+                if(idProduto == 0)
+                {
+                    adicionarMais = false;
+                    continue;
+                }
+
+                Produto? produto = Produto.listarPorId(idProduto);
+
+                if (produto == null) { 
+                    Console.WriteLine("Produto não encontrado... Tente novamente");
+                    continue;
+                }
+
+                Console.Write($"Quantidade de {produto.Nome} | Preço {produto.Preco:C}");
+                int.TryParse(Console.ReadLine(), out int qtdProduto);
+
+
+
+                if (qtdProduto >= 0)
+                {   
+                    compraAtiva.AdicionarItem(produto, qtdProduto);
+                    Console.WriteLine($"Subtotal : {produto.Preco * qtdProduto}");                   
+                }
+            } // ENCERRA O LAÇO DE PRODUTOS 
+
+            // 3. Checkout 
+            if(compraAtiva.Itens.Count == 0)
+            {
+                Console.WriteLine("\nVenda cancelada (Nenhum item foi adicionado).");
+            }
+            else
+            {
+                Console.WriteLine("\n------ RESUMO DA VENDA ------");
+                foreach (var item in compraAtiva.Itens)
+                {
+                    Console.WriteLine($"ID: {item.ProdutoId} " +
+                        $"| Qtd: {item.Quantidade} " +
+                        $"| Preço Unit: {item.PrecoCobrado}" +
+                        $"| Subtotal: {item.CalcularSubtotal():C}");
+                }
+
+                decimal totalFinal = compraAtiva.CalcularTotal();
+
+                Console.WriteLine("------------------------------");
+                Console.WriteLine($"TOTAL A PAGAR: {totalFinal:C}");
+                Console.WriteLine("------------------------------");
+
+            }
+
+
+            Console.ReadKey();
         }
 
 
